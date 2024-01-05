@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id   String @id @default(uuid())
+  name String
+
+  @@map("user")
+}
+
+model ProducerRegistration {
+  id                 String @id @default(uuid())
+  cpf_cnpj           String @unique
+  productor_name     String
+  farm_name          String
+  city               String
+  state              String
+  total_area_hectare Int
+  agricultural_area  Int
+  vegetation_area    Int
+  crops_grown        String
+
+  @@map("producerRegistration")
+}
