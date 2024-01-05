@@ -29,6 +29,17 @@ export class ModulesService {
       throw new Error('Registration already exists');
     }
 
+
+    // Validação de área total
+    if ((data.agricultural_area + data.vegetation_area) > data.total_area_hectare) {
+      throw new Error('The sum of agricultural area and vegetation area cannot exceed the total area');
+    }
+
+    //  // Validação de culturas plantadas
+    //  if (!Array.isArray(data.crops_grown) || data.crops_grown.length === 0) {
+    //   throw new Error('At least one crop should be specified');
+    // }
+
     const makeRegister = await this.prisma.producerRegistration.create({
       data,
     });
@@ -36,6 +47,52 @@ export class ModulesService {
     return makeRegister;
   }
   
+  async getTotalFazendas(): Promise<number> {
+    const totalFazendas = await this.prisma.producerRegistration.count();
+    return totalFazendas;
+  }
+
+  async getTotalAreaHectares(): Promise<number> {
+    const allFarms = await this.prisma.producerRegistration.findMany();
+    const totalAreaHectares = allFarms.reduce((total, farm) => total + farm.total_area_hectare, 0);
+    return totalAreaHectares;
+  }
+
+  async getDistinctStates(): Promise<string[]> {
+    const distinctStates = await this.prisma.producerRegistration.findMany({
+      distinct: ['state'],
+      select: {
+        state: true,
+      },
+    });
+    return distinctStates.map((item) => item.state);
+  }
+
+  async getDistinctCropsGrown(): Promise<string[]> {
+    const distinctCropsGrown = await this.prisma.producerRegistration.findMany({
+      distinct: ['crops_grown'],
+      select: {
+        crops_grown: true,
+      },
+    });
+    return distinctCropsGrown.map((item) => item.crops_grown);
+  }
+
+  async getTotalAreaDivided(): Promise<{ agriculturalArea: number; vegetationArea: number }> {
+    const allFarms = await this.prisma.producerRegistration.findMany({
+      select: {
+        agricultural_area: true,
+        vegetation_area: true,
+      },
+    });
+
+    const agriculturalArea = allFarms.reduce((total, farm) => total + farm.agricultural_area, 0);
+    const vegetationArea = allFarms.reduce((total, farm) => total + farm.vegetation_area, 0);
+
+    return { agriculturalArea, vegetationArea };
+  }
+
+
   findAll() {
     return this.prisma.producerRegistration.findMany();
   }
