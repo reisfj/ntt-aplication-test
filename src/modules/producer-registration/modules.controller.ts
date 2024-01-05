@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
 import { ModulesService } from './modules.service';
 import { ProducerRegistrationDTO } from './dto/create-module.dto';
 import { UpdateModuleDto } from './dto/update-module.dto';
@@ -17,18 +17,18 @@ export class ModulesController {
     return this.modulesService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.modulesService.findOne(+id);
-  }
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   return this.modulesService.findOne(+id);
+  // }
 
-  @Patch(':id')
+  @Put(':id')
   update(@Param('id') id: string, @Body() updateModuleDto: UpdateModuleDto) {
-    return this.modulesService.update(+id, updateModuleDto);
+    return this.modulesService.update(id, updateModuleDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.modulesService.remove(+id);
+    return this.modulesService.remove(id);
   }
 }
