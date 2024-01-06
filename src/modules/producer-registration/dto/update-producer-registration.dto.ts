@@ -1,5 +1,5 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { ProducerRegistrationDTO } from './create-module.dto';
+import { ProducerRegistrationDTO } from './create-producer-registration.dto';
 
 export class UpdateModuleDto extends PartialType(
   class ProducerRegistrationDTO implements Partial<ProducerRegistrationDTO> {
@@ -12,6 +12,6 @@ export class UpdateModuleDto extends PartialType(
     total_area_hectare: number;
     agricultural_area: number;
     vegetation_area: number;
-    crops_grown: string;
+    crops_grown: string[];
   }
 ) {}

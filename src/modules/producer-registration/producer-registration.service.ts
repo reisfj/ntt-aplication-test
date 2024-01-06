@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { ProducerRegistrationDTO } from './dto/create-module.dto';
-import { UpdateModuleDto } from './dto/update-module.dto';
+import { ProducerRegistrationDTO } from './dto/create-producer-registration.dto';
+import { UpdateModuleDto } from './dto/update-producer-registration.dto';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/database/PrismaService';
 import { cpf as validateCpfCnpj } from 'cpf-cnpj-validator';
@@ -34,11 +34,6 @@ export class ModulesService {
     if ((data.agricultural_area + data.vegetation_area) > data.total_area_hectare) {
       throw new Error('The sum of agricultural area and vegetation area cannot exceed the total area');
     }
-
-    //  // Validação de culturas plantadas
-    //  if (!Array.isArray(data.crops_grown) || data.crops_grown.length === 0) {
-    //   throw new Error('At least one crop should be specified');
-    // }
 
     const makeRegister = await this.prisma.producerRegistration.create({
       data,
@@ -75,7 +70,7 @@ export class ModulesService {
         crops_grown: true,
       },
     });
-    return distinctCropsGrown.map((item) => item.crops_grown);
+    return distinctCropsGrown.flatMap((item) => item.crops_grown);
   }
 
   async getTotalAreaDivided(): Promise<{ agriculturalArea: number; vegetationArea: number }> {
@@ -96,10 +91,6 @@ export class ModulesService {
   findAll() {
     return this.prisma.producerRegistration.findMany();
   }
-
-  // findOne(id: number) {
-  //   return "teste";
-  // }
 
   async update(id: string, data: UpdateModuleDto) {
     const registerExists = await this.prisma.producerRegistration.findFirst({

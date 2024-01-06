@@ -8,5 +8,5 @@ export type ProducerRegistrationDTO = {
     total_area_hectare: number;
     agricultural_area: number;
     vegetation_area: number;
-    crops_grown: string;
+    crops_grown: string[];
 }

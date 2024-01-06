@@ -1,27 +1,12 @@
- generator client {
-   provider = "prisma-client-js"
- }
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
 
- datasource db {
-   provider = "sqlite"
-   url      = env("DATABASE_URL")
- }
-
-// datasource db {
-//   provider = "postgresql"
-//   url      = env("DATABASE_URL")
-// }
-
-// generator client {
-//   provider = "prisma-client-js"
-// }
-
-// model User {
-//   id   String @id @default(uuid())
-//   name String
-
-//   @@map("user")
-// }
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.1.x"]
+}
 
 model ProducerRegistration {
   id                 String @id @default(uuid())
@@ -33,7 +18,7 @@ model ProducerRegistration {
   total_area_hectare Int
   agricultural_area  Int
   vegetation_area    Int
-  crops_grown        String
+  crops_grown        String[] 
 
   @@map("producerRegistration")
 }

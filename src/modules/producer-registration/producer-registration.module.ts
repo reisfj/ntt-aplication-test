@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { ModulesService } from './modules.service';
-import { ModulesController } from './modules.controller';
+import { ModulesService } from './producer-registration.service';
+import { ModulesController } from './producer-registration.controller';
 import { PrismaService } from 'src/database/PrismaService';
 
 @Module({

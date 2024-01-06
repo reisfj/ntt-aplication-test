@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
-import { ModulesService } from './modules.service';
-import { ProducerRegistrationDTO } from './dto/create-module.dto';
-import { UpdateModuleDto } from './dto/update-module.dto';
+import { ModulesService } from './producer-registration.service';
+import { ProducerRegistrationDTO } from './dto/create-producer-registration.dto';
+import { UpdateModuleDto } from './dto/update-producer-registration.dto';
 
 @Controller('modules')
 export class ModulesController {
@@ -48,11 +48,6 @@ export class ModulesController {
     const { agriculturalArea, vegetationArea } = await this.modulesService.getTotalAreaDivided();
     return { agriculturalArea, vegetationArea };
   }
-
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.modulesService.findOne(+id);
-  // }
 
   @Put(':id')
   update(@Param('id') id: string, @Body() updateModuleDto: UpdateModuleDto) {

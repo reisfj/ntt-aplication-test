@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ModulesModule } from './modules/producer-registration/modules.module';
+import { ModulesModule } from './modules/producer-registration/producer-registration.module';
 
 
 @Module({
