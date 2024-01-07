@@ -1,22 +1,23 @@
 import { Injectable } from '@nestjs/common';
 import { ProducerRegistrationDTO } from './dto/create-producer-registration.dto';
 import { UpdateModuleDto } from './dto/update-producer-registration.dto';
-import { Prisma } from '@prisma/client';
-import { PrismaService } from 'src/database/PrismaService';
-import { cpf as validateCpfCnpj } from 'cpf-cnpj-validator';
+import { PrismaService } from '../../database/PrismaService';
+import { CpfCnpjValidator } from '../../CpfCnpjValidator';
 
 @Injectable()
-export class ModulesService {
+export class ProducerRegistrationService {
+  private cpfCnpjValidator: CpfCnpjValidator;
 
-  constructor(private prisma: PrismaService){}
+  constructor(private prisma: PrismaService) {
+    this.cpfCnpjValidator = new CpfCnpjValidator();
+  }
 
-  async create(data: ProducerRegistrationDTO) {
-
-    const isCpfCnpjValid = validateCpfCnpj.isValid(data.cpf_cnpj);
+  async create(data: ProducerRegistrationDTO) { //OKOKOKOKOK
+    const isCpfCnpjValid = this.cpfCnpjValidator.isValid(data.cpf_cnpj);
 
     if (!isCpfCnpjValid) {
       throw new Error('Invalid CPF or CNPJ');
-    };
+    }
 
 
     const registerExists = await this.prisma.producerRegistration.findFirst({
@@ -42,38 +43,68 @@ export class ModulesService {
     return makeRegister;
   }
   
-  async getTotalFazendas(): Promise<number> {
-    const totalFazendas = await this.prisma.producerRegistration.count();
-    return totalFazendas;
+  async getTotalFarms(): Promise<number> { //OKOKOKOKOK
+    const totalFarms = await this.prisma.producerRegistration.count();
+    return totalFarms;
   }
 
-  async getTotalAreaHectares(): Promise<number> {
+  async getTotalAreaHectares(): Promise<number> {//OKOKOKOKOK
     const allFarms = await this.prisma.producerRegistration.findMany();
     const totalAreaHectares = allFarms.reduce((total, farm) => total + farm.total_area_hectare, 0);
     return totalAreaHectares;
   }
 
-  async getDistinctStates(): Promise<string[]> {
-    const distinctStates = await this.prisma.producerRegistration.findMany({
-      distinct: ['state'],
-      select: {
-        state: true,
-      },
+  async getDistinctStatesWithCount(): Promise<{ state: string; count: number }[]> {//OKOKOKOKOK
+    const allProducerRegistrations = await this.prisma.producerRegistration.findMany();
+    
+    const stateCountsMap: { [key: string]: number } = {};
+  
+    // Contagem manual das ocorrências de cada estado
+    allProducerRegistrations.forEach((registration) => {
+      const state = registration.state;
+      if (stateCountsMap[state]) {
+        stateCountsMap[state] += 1;
+      } else {
+        stateCountsMap[state] = 1;
+      }
     });
-    return distinctStates.map((item) => item.state);
+  
+    // Convertendo o mapa para o formato desejado
+    const distinctStatesWithCount: { state: string; count: number }[] = [];
+    for (const state in stateCountsMap) {
+      distinctStatesWithCount.push({ state, count: stateCountsMap[state] });
+    }
+  
+    return distinctStatesWithCount;
   }
+  
 
-  async getDistinctCropsGrown(): Promise<string[]> {
-    const distinctCropsGrown = await this.prisma.producerRegistration.findMany({
-      distinct: ['crops_grown'],
-      select: {
-        crops_grown: true,
-      },
+  async getDistinctCropsGrownWithCount(): Promise<{ crop: string; count: number }[]> { //OKOKOKOKOK
+    const allProducerRegistrations = await this.prisma.producerRegistration.findMany();
+  
+    const cropsCountMap: { [key: string]: number } = {};
+  
+    allProducerRegistrations.forEach((registration) => {
+      const crops = registration.crops_grown;
+      crops.forEach((crop) => {
+        if (cropsCountMap[crop]) {
+          cropsCountMap[crop] += 1;
+        } else {
+          cropsCountMap[crop] = 1;
+        }
+      });
     });
-    return distinctCropsGrown.flatMap((item) => item.crops_grown);
+  
+    const distinctCropsWithCount: { crop: string; count: number }[] = [];
+    for (const crop in cropsCountMap) {
+      distinctCropsWithCount.push({ crop, count: cropsCountMap[crop] });
+    }
+  
+    return distinctCropsWithCount;
   }
+  
 
-  async getTotalAreaDivided(): Promise<{ agriculturalArea: number; vegetationArea: number }> {
+  async getTotalAreaDivided(): Promise<{ agriculturalArea: number; vegetationArea: number }> { //OKOKOKOKOK
     const allFarms = await this.prisma.producerRegistration.findMany({
       select: {
         agricultural_area: true,
@@ -88,9 +119,9 @@ export class ModulesService {
   }
 
 
-  findAll() {
-    return this.prisma.producerRegistration.findMany();
-  }
+    findAll() {
+      return this.prisma.producerRegistration.findMany();
+    }
 
   async update(id: string, data: UpdateModuleDto) {
     const registerExists = await this.prisma.producerRegistration.findFirst({

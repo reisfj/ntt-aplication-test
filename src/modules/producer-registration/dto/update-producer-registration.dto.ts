@@ -3,7 +3,7 @@ import { ProducerRegistrationDTO } from './create-producer-registration.dto';
 
 export class UpdateModuleDto extends PartialType(
   class ProducerRegistrationDTO implements Partial<ProducerRegistrationDTO> {
-    id?: string;
+    id: string;
     cpf_cnpj: string;
     productor_name: string;
     farm_name: string;

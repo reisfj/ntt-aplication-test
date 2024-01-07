@@ -1,5 +1,5 @@
 export type ProducerRegistrationDTO = {
-    id?: string;
+    id: string;
     cpf_cnpj: string;
     productor_name: string;
     farm_name: string;

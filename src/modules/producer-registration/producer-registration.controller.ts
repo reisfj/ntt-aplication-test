@@ -1,44 +1,44 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
-import { ModulesService } from './producer-registration.service';
+import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common';
+import { ProducerRegistrationService } from './producer-registration.service';
 import { ProducerRegistrationDTO } from './dto/create-producer-registration.dto';
 import { UpdateModuleDto } from './dto/update-producer-registration.dto';
 
 @Controller('modules')
-export class ModulesController {
-  constructor(private readonly modulesService: ModulesService) {}
+export class ProducerRegistrationController {
+  constructor(private readonly modulesService: ProducerRegistrationService) {}
 
-  @Post()
+  @Post() // Endpoint para registrar um produtor
   create(@Body() ProducerRegistrationDTO: ProducerRegistrationDTO) {
     return this.modulesService.create(ProducerRegistrationDTO);
   }
 
-  @Get()
+  @Get() // Endpoint para obter todos os valores
   findAll() {
     return this.modulesService.findAll();
   }
 
-  @Get('total')
-  async getTotalFazendas(): Promise<{ totalFazendas: number }> {
-    const totalFazendas = await this.modulesService.getTotalFazendas();
-    return { totalFazendas }; 
+  @Get('total') // Endpoint para obter a quantidade de fazendas
+  async getTotalFarms(): Promise<{ totalFarms: number }> {
+    const totalFarms = await this.modulesService.getTotalFarms();
+    return { totalFarms }; 
   }
 
-  @Get('total-area-hectares')
+  @Get('total-area-hectares') // Endpoint para receber o total de hectares de todas fazendas
   async getTotalAreaHectares(): Promise<{ totalAreaHectares: number }> {
     const totalAreaHectares = await this.modulesService.getTotalAreaHectares();
     return { totalAreaHectares };
   }
 
-  @Get('states') // Endpoint para obter estados
-  async getStatesData(): Promise<{ states: string[] }> {
-    const states = await this.modulesService.getDistinctStates();
-    return { states };
+  @Get('states') // Endpoint para obter os estados e o quanto se repetem
+  async getStatesData(): Promise<{ states: { state: string; count: number }[] }> {
+    const statesWithCount = await this.modulesService.getDistinctStatesWithCount();
+    return { states: statesWithCount };
   }
 
 
   @Get('crops-grown') // Endpoint para obter culturas plantadas
-  async getCropsGrownData(): Promise<{ cropsGrown: string[] }> {
-    const cropsGrown = await this.modulesService.getDistinctCropsGrown();
+  async getCropsGrownData(): Promise<{ cropsGrown: { crop: string; count: number }[] }> {
+    const cropsGrown = await this.modulesService.getDistinctCropsGrownWithCount();
     return { cropsGrown };
   }
 
