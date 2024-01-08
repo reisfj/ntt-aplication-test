@@ -1,6 +1,6 @@
 import { PartialType } from '@nestjs/mapped-types';
 
-export class UpdateModuleDto extends PartialType(
+export class UpdateProducerRegistrationDto extends PartialType(
   class ProducerRegistrationDTO implements Partial<ProducerRegistrationDTO> {
     id: string;
     cpf_cnpj: string;

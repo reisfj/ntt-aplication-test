@@ -7,4 +7,4 @@ import { PrismaService } from '../../database/PrismaService';
   controllers: [ProducerRegistrationController ],
   providers: [ProducerRegistrationService, PrismaService],
 })
-export class ModulesModule {}
+export class ProducerRegistrationModule {}

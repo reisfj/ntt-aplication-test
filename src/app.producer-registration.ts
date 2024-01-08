@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { ModulesModule } from './modules/producer-registration/producer-registration.module';
+import { ProducerRegistrationModule } from './modules/producer-registration/producer-registration.module';
 
 
 @Module({
-  imports: [ModulesModule],
+  imports: [ProducerRegistrationModule],
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class ProducerRegistrationAppModule {}

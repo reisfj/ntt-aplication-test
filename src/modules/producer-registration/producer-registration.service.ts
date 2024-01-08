@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ProducerRegistrationDTO } from './dto/create-producer-registration.dto';
-import { UpdateModuleDto } from './dto/update-producer-registration.dto';
+import { UpdateProducerRegistrationDto } from './dto/update-producer-registration.dto';
 import { PrismaService } from '../../database/PrismaService';
 import { CpfCnpjValidator } from '../../CpfCnpjValidator';
 
@@ -123,7 +123,7 @@ export class ProducerRegistrationService {
       return this.prisma.producerRegistration.findMany();
     }
 
-  async update(id: string, data: UpdateModuleDto) {
+  async update(id: string, data: UpdateProducerRegistrationDto) {
     const registerExists = await this.prisma.producerRegistration.findFirst({
       where: {
         id,
