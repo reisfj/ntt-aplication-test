@@ -24,33 +24,34 @@
 
 ## Description
 
-# Teste NTT Data - Aplicação
+# NTT Data Test - Application
 
-Esta aplicação foi desenvolvida como requisito para o teste da NTT Data. Ela utiliza uma variedade de tecnologias, incluindo:
+This application was developed as a requirement for the NTT Data test. It utilizes a variety of technologies, including:
 
-- **NestJS 8.0**: Framework para construção de aplicativos Node.js eficientes e escaláveis.
-- **Prisma 3.5**: ORM (Object-Relational Mapping) para bancos de dados SQL e outras funcionalidades relacionadas ao banco de dados.
-- **PostgreSQL**: Banco de dados relacional utilizado pela aplicação.
-- **Docker**: Plataforma que permite desenvolver, testar e implantar aplicativos em contêineres.
-- **TypeScript**: Linguagem de programação que adiciona tipagem estática ao JavaScript.
-- **Jest**: Framework de teste em JavaScript.
-- **Node.js**: Ambiente de execução JavaScript server-side.
+- **NestJS 8.0**: Framework for building efficient and scalable Node.js applications.
+- **Prisma 3.5**: ORM (Object-Relational Mapping) for SQL databases and related database functionalities.
+- **PostgreSQL**: Relational database used by the application.
+- **Docker**: Platform for developing, testing, and deploying applications in containers.
+- **TypeScript**: Programming language adding static typing to JavaScript.
+- **Jest**: JavaScript testing framework.
+- **Node.js**: Server-side JavaScript runtime environment.
 
-## Instruções de Inicialização
+## Initialization Instructions
 
-Para iniciar a aplicação:
+To start the application:
 
-1. **Instale as Dependências**: Na linha de comando, digite `npm install` para baixar todas as dependências necessárias.
+1. **Install Dependencies**: In the command line, type `npm install` to download all necessary dependencies.
 
-2. **Inicialize o Docker**:
-   - Certifique-se de ter o Docker Desktop instalado.
-   - Abra o terminal e navegue até o diretório da aplicação com o comando `cd (caminho/do/diretório)`.
-   - Execute `docker compose build` para construir os contêineres.
-   - Em seguida, execute `docker compose up` para iniciar o Docker.
+2. **Initialize Docker**:
+   - Make sure you have Docker Desktop installed.
+   - Open the terminal and navigate to the application's directory using `cd (path/to/directory)`.
+   - Run `docker compose build` to build the containers.
+   - Then, execute `docker compose up` to start Docker.
 
-3. **Inicialize o Prisma**:
-   - Execute `npm install prisma` para instalar o Prisma.
-   - Em seguida, utilize `npx prisma migrate dev` para aplicar as migrações do Prisma e atualizar o banco de dados.
+3. **Initialize Prisma**:
+   - Run `npm install prisma` to install Prisma.
+   - Next, use `npx prisma migrate dev` to apply Prisma migrations and update the database.
+
 
 ## Running the app
 
