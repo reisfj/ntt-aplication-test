@@ -56,28 +56,28 @@ describe('ProducerRegistrationService', () => {
     expect(result).toEqual(data);
   });
 
-  
+
   // Teste para o método getTotalFarms()
   it('should return the total number of farms', async () => {
     const totalFarms = 10;
     jest.spyOn(prismaServiceMock.producerRegistration, 'count').mockResolvedValue(totalFarms);
 
-    // Chame a função que você está testando
+
     const result = await producerRegistrationService.getTotalFarms();
 
-    // Verifique se a função count() foi chamada corretamente
+
     expect(prismaServiceMock.producerRegistration.count).toHaveBeenCalled();
 
-    // Verifique se o resultado retornado é igual ao valor esperado
+
     expect(result).toEqual(totalFarms);
   });
-  
+
 
 
   // Teste para o método getTotalAreaHectares()
   it('should return the total area in hectares of all farms', async () => {
     const farms = [
-      { 
+      {
         id: '1',
         cpf_cnpj: '12345678900',
         productor_name: 'Produtor 1',
@@ -89,7 +89,7 @@ describe('ProducerRegistrationService', () => {
         vegetation_area: 20,
         crops_grown: ['Milho', 'Soja'],
       },
-      { 
+      {
         id: '2',
         cpf_cnpj: '98765432100',
         productor_name: 'Produtor 2',
@@ -101,19 +101,19 @@ describe('ProducerRegistrationService', () => {
         vegetation_area: 20,
         crops_grown: ['Trigo', 'Arroz'],
       },
-      // Adicione mais fazendas conforme necessário
+
     ];
     const totalAreaExpected = farms.reduce((total, farm) => total + farm.total_area_hectare, 0);
 
     jest.spyOn(prismaServiceMock.producerRegistration, 'findMany').mockResolvedValue(farms);
 
-    // Chame a função que você está testando
+
     const result = await producerRegistrationService.getTotalAreaHectares();
 
-    // Verifique se a função findMany() foi chamada corretamente
+
     expect(prismaServiceMock.producerRegistration.findMany).toHaveBeenCalled();
 
-    // Verifique se o resultado retornado é igual à soma esperada das áreas em hectares
+
     expect(result).toEqual(totalAreaExpected);
   });
 
@@ -126,19 +126,19 @@ describe('ProducerRegistrationService', () => {
       { state: 'State B' },
       { state: 'State B' },
       { state: 'State B' },
-      //... adicione mais registros conforme necessário para simular diferentes estados
+
     ];
-  
+
     jest.spyOn(prismaServiceMock.producerRegistration, 'findMany').mockResolvedValue(allProducerRegistrations as any);
-  
+
     const expectedResult = [
       { state: 'State A', count: 2 },
       { state: 'State B', count: 3 },
-      //... adicione mais resultados esperados conforme necessário para os diferentes estados
+
     ];
-  
+
     const result = await producerRegistrationService.getDistinctStatesWithCount();
-  
+
     expect(prismaServiceMock.producerRegistration.findMany).toHaveBeenCalled();
     expect(result).toEqual(expectedResult);
   });
@@ -151,25 +151,25 @@ describe('ProducerRegistrationService', () => {
       { crops_grown: ['Corn', 'Wheat'] },
       { crops_grown: ['Rice', 'Wheat'] },
       { crops_grown: ['Corn', 'Soybean'] },
-      // Adicione mais registros conforme necessário para simular diferentes culturas
+
     ];
-  
+
     jest.spyOn(prismaServiceMock.producerRegistration, 'findMany').mockResolvedValue(mockRegistrations as any);
-  
+
     const expectedResult = [
       { crop: 'Corn', count: 2 },
       { crop: 'Wheat', count: 2 },
       { crop: 'Rice', count: 1 },
       { crop: 'Soybean', count: 1 },
-      // Adicione mais resultados esperados conforme necessário para as diferentes culturas
+
     ];
-  
+
     const result = await producerRegistrationService.getDistinctCropsGrownWithCount();
-  
+
     expect(prismaServiceMock.producerRegistration.findMany).toHaveBeenCalled();
     expect(result).toEqual(expectedResult);
   });
-  
+
 
   // Teste para o método getDistinctCropsGrownWithCount()  
   it('should retrieve distinct crops grown with count correctly', async () => {
@@ -177,25 +177,25 @@ describe('ProducerRegistrationService', () => {
       { crops_grown: ['Corn', 'Wheat'] },
       { crops_grown: ['Rice', 'Wheat'] },
       { crops_grown: ['Corn', 'Soybean'] },
-      // Adicione mais registros conforme necessário para simular diferentes culturas
+
     ];
-  
+
     jest.spyOn(prismaServiceMock.producerRegistration, 'findMany').mockResolvedValue(mockRegistrations as any);
-  
+
     const expectedResult = [
       { crop: 'Corn', count: 2 },
       { crop: 'Wheat', count: 2 },
       { crop: 'Rice', count: 1 },
       { crop: 'Soybean', count: 1 },
-      // Adicione mais resultados esperados conforme necessário para as diferentes culturas
+
     ];
-  
+
     const result = await producerRegistrationService.getDistinctCropsGrownWithCount();
-  
+
     expect(prismaServiceMock.producerRegistration.findMany).toHaveBeenCalled();
     expect(result).toEqual(expectedResult);
   });
-  
+
 
   // Teste para o método getTotalAreaDivided()
   it('should retrieve total agricultural and vegetation areas correctly', async () => {
@@ -203,59 +203,59 @@ describe('ProducerRegistrationService', () => {
       { agricultural_area: 50, vegetation_area: 30 },
       { agricultural_area: 70, vegetation_area: 20 },
       { agricultural_area: 40, vegetation_area: 50 },
-      // Adicione mais fazendas conforme necessário
+
     ];
-  
+
     jest.spyOn(prismaServiceMock.producerRegistration, 'findMany').mockResolvedValue(mockFarms as any);
-  
+
     const expectedResult = {
-      agriculturalArea: 160, // Soma total das áreas agrícolas das fazendas de mockFarms
-      vegetationArea: 100, // Soma total das áreas de vegetação das fazendas de mockFarms
+      agriculturalArea: 160,
+      vegetationArea: 100,
     };
-  
+
     const result = await producerRegistrationService.getTotalAreaDivided();
-  
+
     expect(prismaServiceMock.producerRegistration.findMany).toHaveBeenCalled();
     expect(result).toEqual(expectedResult);
   });
-  
+
   // Teste para o método findAll()
   it('should retrieve all producer registrations', async () => {
     const mockRegistrations = [
       { id: '1', productor_name: 'Producer 1', },
       { id: '2', productor_name: 'Producer 2', },
-      // Adicione mais registros conforme necessário
+
     ];
-  
+
     jest.spyOn(prismaServiceMock.producerRegistration, 'findMany').mockResolvedValue(mockRegistrations as any);
-  
+
     const result = await producerRegistrationService.findAll();
-  
+
     expect(prismaServiceMock.producerRegistration.findMany).toHaveBeenCalled();
     expect(result).toEqual(mockRegistrations);
   });
-  
+
 
   // Teste para o método update()
   it('should update an existing registration and throw an error if not found', async () => {
     const mockId = '1';
     const mockUpdateData = {
       productor_name: 'Updated Producer Name',
-      // Adicione outros campos que você deseja atualizar
+
     };
-  
+
     const mockExistingRegistration = {
       id: mockId,
       productor_name: 'Existing Producer Name',
-      // Adicione outros campos presentes no registro existente
+
     };
-  
+
     jest.spyOn(prismaServiceMock.producerRegistration, 'findFirst').mockResolvedValue(mockExistingRegistration as any);
     jest.spyOn(prismaServiceMock.producerRegistration, 'update').mockResolvedValue({ ...mockExistingRegistration, ...mockUpdateData } as any);
-  
-    // Teste para o caso em que o registro existe
+
+
     const result = await producerRegistrationService.update(mockId, mockUpdateData);
-  
+
     expect(prismaServiceMock.producerRegistration.findFirst).toHaveBeenCalledWith({
       where: { id: mockId },
     });
@@ -264,8 +264,8 @@ describe('ProducerRegistrationService', () => {
       where: { id: mockId },
     });
     expect(result).toEqual({ ...mockExistingRegistration, ...mockUpdateData });
-  
-    // Teste para o caso em que o registro não existe
+
+
     jest.spyOn(prismaServiceMock.producerRegistration, 'findFirst').mockResolvedValue(null);
     try {
       await producerRegistrationService.update('nonexistentId', mockUpdateData);
@@ -273,24 +273,24 @@ describe('ProducerRegistrationService', () => {
       expect(error).toEqual(new Error('Register does not exists!'));
     }
   });
-  
+
 
   // Teste para o método delete()
   it('should remove an existing registration and throw an error if not found', async () => {
     const mockId = '1';
-  
+
     const mockExistingRegistration = {
       id: mockId,
       productor_name: 'Existing Producer Name',
-      // Adicione outros campos presentes no registro existente
+
     };
-  
+
     jest.spyOn(prismaServiceMock.producerRegistration, 'findFirst').mockResolvedValue(mockExistingRegistration as any);
     jest.spyOn(prismaServiceMock.producerRegistration, 'delete').mockResolvedValue(mockExistingRegistration as any);
-  
-    // Teste para o caso em que o registro existe
+
+
     const result = await producerRegistrationService.remove(mockId);
-  
+
     expect(prismaServiceMock.producerRegistration.findFirst).toHaveBeenCalledWith({
       where: { id: mockId },
     });
@@ -298,8 +298,8 @@ describe('ProducerRegistrationService', () => {
       where: { id: mockId },
     });
     expect(result).toEqual(mockExistingRegistration);
-  
-    // Teste para o caso em que o registro não existe
+
+
     jest.spyOn(prismaServiceMock.producerRegistration, 'findFirst').mockResolvedValue(null);
     try {
       await producerRegistrationService.remove('nonexistentId');
@@ -307,6 +307,6 @@ describe('ProducerRegistrationService', () => {
       expect(error).toEqual(new Error('Register does not exists!'));
     }
   });
-  
-  
+
+
 });

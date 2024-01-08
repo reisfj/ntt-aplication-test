@@ -49,12 +49,12 @@ export class ProducerRegistrationController {
     return { agriculturalArea, vegetationArea };
   }
 
-  @Put(':id')
+  @Put(':id') // Endpoint para atualizar valores
   update(@Param('id') id: string, @Body() updateModuleDto: UpdateModuleDto) {
     return this.modulesService.update(id, updateModuleDto);
   }
 
-  @Delete(':id')
+  @Delete(':id') // Endpoint para deletar valores
   remove(@Param('id') id: string) {
     return this.modulesService.remove(id);
   }

@@ -1,5 +1,4 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { ProducerRegistrationDTO } from './create-producer-registration.dto';
 
 export class UpdateModuleDto extends PartialType(
   class ProducerRegistrationDTO implements Partial<ProducerRegistrationDTO> {

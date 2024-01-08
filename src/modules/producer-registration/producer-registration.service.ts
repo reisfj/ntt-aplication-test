@@ -12,7 +12,7 @@ export class ProducerRegistrationService {
     this.cpfCnpjValidator = new CpfCnpjValidator();
   }
 
-  async create(data: ProducerRegistrationDTO) { //OKOKOKOKOK
+  async create(data: ProducerRegistrationDTO) { 
     const isCpfCnpjValid = this.cpfCnpjValidator.isValid(data.cpf_cnpj);
 
     if (!isCpfCnpjValid) {
@@ -43,18 +43,18 @@ export class ProducerRegistrationService {
     return makeRegister;
   }
   
-  async getTotalFarms(): Promise<number> { //OKOKOKOKOK
+  async getTotalFarms(): Promise<number> { 
     const totalFarms = await this.prisma.producerRegistration.count();
     return totalFarms;
   }
 
-  async getTotalAreaHectares(): Promise<number> {//OKOKOKOKOK
+  async getTotalAreaHectares(): Promise<number> {
     const allFarms = await this.prisma.producerRegistration.findMany();
     const totalAreaHectares = allFarms.reduce((total, farm) => total + farm.total_area_hectare, 0);
     return totalAreaHectares;
   }
 
-  async getDistinctStatesWithCount(): Promise<{ state: string; count: number }[]> {//OKOKOKOKOK
+  async getDistinctStatesWithCount(): Promise<{ state: string; count: number }[]> {
     const allProducerRegistrations = await this.prisma.producerRegistration.findMany();
     
     const stateCountsMap: { [key: string]: number } = {};
@@ -79,7 +79,7 @@ export class ProducerRegistrationService {
   }
   
 
-  async getDistinctCropsGrownWithCount(): Promise<{ crop: string; count: number }[]> { //OKOKOKOKOK
+  async getDistinctCropsGrownWithCount(): Promise<{ crop: string; count: number }[]> { 
     const allProducerRegistrations = await this.prisma.producerRegistration.findMany();
   
     const cropsCountMap: { [key: string]: number } = {};
@@ -104,7 +104,7 @@ export class ProducerRegistrationService {
   }
   
 
-  async getTotalAreaDivided(): Promise<{ agriculturalArea: number; vegetationArea: number }> { //OKOKOKOKOK
+  async getTotalAreaDivided(): Promise<{ agriculturalArea: number; vegetationArea: number }> { 
     const allFarms = await this.prisma.producerRegistration.findMany({
       select: {
         agricultural_area: true,

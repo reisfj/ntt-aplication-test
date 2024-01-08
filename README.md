@@ -24,13 +24,33 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+# Teste NTT Data - Aplicação
 
-## Installation
+Esta aplicação foi desenvolvida como requisito para o teste da NTT Data. Ela utiliza uma variedade de tecnologias, incluindo:
 
-```bash
-$ npm install
-```
+- **NestJS 8.0**: Framework para construção de aplicativos Node.js eficientes e escaláveis.
+- **Prisma 3.5**: ORM (Object-Relational Mapping) para bancos de dados SQL e outras funcionalidades relacionadas ao banco de dados.
+- **PostgreSQL**: Banco de dados relacional utilizado pela aplicação.
+- **Docker**: Plataforma que permite desenvolver, testar e implantar aplicativos em contêineres.
+- **TypeScript**: Linguagem de programação que adiciona tipagem estática ao JavaScript.
+- **Jest**: Framework de teste em JavaScript.
+- **Node.js**: Ambiente de execução JavaScript server-side.
+
+## Instruções de Inicialização
+
+Para iniciar a aplicação:
+
+1. **Instale as Dependências**: Na linha de comando, digite `npm install` para baixar todas as dependências necessárias.
+
+2. **Inicialize o Docker**:
+   - Certifique-se de ter o Docker Desktop instalado.
+   - Abra o terminal e navegue até o diretório da aplicação com o comando `cd (caminho/do/diretório)`.
+   - Execute `docker compose build` para construir os contêineres.
+   - Em seguida, execute `docker compose up` para iniciar o Docker.
+
+3. **Inicialize o Prisma**:
+   - Execute `npm install prisma` para instalar o Prisma.
+   - Em seguida, utilize `npx prisma migrate dev` para aplicar as migrações do Prisma e atualizar o banco de dados.
 
 ## Running the app
 
@@ -61,12 +81,6 @@ $ npm run test:cov
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
 ## License
 
