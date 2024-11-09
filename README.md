@@ -1,6 +1,8 @@
 ## Description
 
-# NTT Data Test - Application
+# NestJS-Prisma-Docker-App
+
+The application is a backend developed with NestJS, focused on providing an efficient API for managing data in a PostgreSQL database using Prisma as ORM. With a structure that favors scalability and robustness, the application integrates Docker to optimize development and deployment. Its goal is to offer CRUD operations and essential functionalities that meet the demands of modern applications, facilitating the creation of agile and effective backend solutions.
 
 This application was developed as a requirement for the NTT Data test. It utilizes a variety of technologies, including:
 
