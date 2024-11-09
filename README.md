@@ -4,7 +4,7 @@
 
 The application is a backend developed with NestJS, focused on providing an efficient API for managing data in a PostgreSQL database using Prisma as ORM. With a structure that favors scalability and robustness, the application integrates Docker to optimize development and deployment. Its goal is to offer CRUD operations and essential functionalities that meet the demands of modern applications, facilitating the creation of agile and effective backend solutions.
 
-This application was developed as a requirement for the NTT Data test. It utilizes a variety of technologies, including:
+This application utilizes a variety of technologies, including:
 
 - **NestJS 8.0**: Framework for building efficient and scalable Node.js applications.
 - **Prisma 3.5**: ORM (Object-Relational Mapping) for SQL databases and related database functionalities.
